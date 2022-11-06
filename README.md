@@ -18,3 +18,5 @@ Color - расцветка
 Company - фирма
 Section - рвздел (например Обувь)
 SubSection - подраздел (например Баскетбольне кроссовки)
+
+commit in develop
