@@ -1,0 +1,41 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+swagger:
+  host: ${SWAGGER_ADDRESS:localhost:${SERVER_PORT:8080}}
+  basePackage: com.am.basketballshop
+  title: АПИ баскетбольного магазина
+  description: АПИ баскетбольного магазина
+
+spring:
+  application.name: "basketball-shop"
+  main.allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:basketball-shop}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/changelog/changelog.xml
+    enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: validate
+      naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+    properties.hibernate:
+      dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      format_sql: ${FORMAT_SQL:false}
+      enable_lazy_load_no_trans: true
+    show-sql: ${SHOW_SQL:true}
+    open-in-view: false
+  mvc:
+    log-resolved-exception: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
