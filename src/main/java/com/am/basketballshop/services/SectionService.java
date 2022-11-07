@@ -41,6 +41,8 @@ public class SectionService {
             throw new NotFoundException("Not found section by id = " + sectionId);
         });
 
+        //Коммит
+
         return SectionDto.builder()
                 .id(section.getId())
                 .name(section.getName())
