@@ -6,6 +6,8 @@ import com.am.basketballshop.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/product")
@@ -21,5 +23,10 @@ public class ProductController {
     @GetMapping(value = "/{productId}")
     ResponseProductDto getProduct(@PathVariable String productId) {
         return productService.getProduct(productId);
+    }
+
+    @GetMapping(value = "/subsection/{subSectionId}")
+    List<ResponseProductDto> getBySubSection(@PathVariable String subSectionId){
+        return productService.getBySubSection(subSectionId);
     }
 }

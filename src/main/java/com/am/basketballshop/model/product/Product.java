@@ -31,6 +31,9 @@ public class Product extends BasedNanoIdEntity {
     @Column(name = "NOVELTY")
     private Boolean novelty;
 
+    @Column(name = "SUM")
+    private int sum;
+
     @Column(name = "VENDOR_CODE")
     private String vendorCode;
 
