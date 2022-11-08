@@ -26,4 +26,5 @@ public class ResponseProductDto {
     private List<ColorDto> colors;
     private String description;
     private SubSection subSection;
+    private Integer summa;
 }

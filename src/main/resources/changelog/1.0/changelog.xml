@@ -12,4 +12,11 @@
     <changeSet id="1.1" author="maxim.solovyev" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221106-0056-create-fk-constraints.sql"/>
     </changeSet>
+
+    <changeSet id="1.2" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221107-1545-add-column-sum.sql"/>
+    </changeSet>
+    <changeSet id="1.2.0" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221108-1615-rename-column-sum.sql"/>
+    </changeSet>
 </databaseChangeLog>

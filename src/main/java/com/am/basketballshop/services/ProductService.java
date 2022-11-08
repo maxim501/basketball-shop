@@ -38,6 +38,7 @@ public class ProductService {
         Product product = new Product();
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
+        product.setSumma(productDto.getSumma());
 
         product.setVendorCode(vendorCodeGenerator.generateVendorCode());
 
@@ -88,12 +89,25 @@ public class ProductService {
         return convertProductToResponse(product);
     }
 
+
+    public List<ResponseProductDto> getBySubSection(String subSectionId){
+        SubSection subSectionById =subSectionRepository.findById(subSectionId).orElseThrow(() -> {
+            throw new NotFoundException("Not found subSection by id = " + subSectionId);
+        });
+
+        List<Product> productsBySubSectionId = productRepository.productsBySubSection(subSectionId);
+
+        return convertProductsListToResponse(productsBySubSectionId);
+
+    }
+
     private ResponseProductDto convertProductToResponse(Product product) {
         return ResponseProductDto.builder()
                 .id(product.getId())
                 .company(product.getCompany())
                 .nameModel(product.getNameModel())
                 .novelty(product.getNovelty())
+                .summa(product.getSumma())
                 .vendorCode(product.getVendorCode())
                 .colors(convertColorModelToDto(product.getColors()))
                 .description(product.getDescription())
@@ -106,6 +120,20 @@ public class ProductService {
                 .id(color.getId())
                 .code(color.getCode())
                 .name(color.getName())
+                .build()).collect(Collectors.toList());
+    }
+
+    private List<ResponseProductDto> convertProductsListToResponse(List<Product> products){
+        return products.stream().map(product -> ResponseProductDto.builder()
+                .id(product.getId())
+                .company(product.getCompany())
+                .nameModel(product.getNameModel())
+                .novelty(product.getNovelty())
+                .summa(product.getSumma())
+                .vendorCode(product.getVendorCode())
+                .colors(convertColorModelToDto(product.getColors()))
+                .description(product.getDescription())
+                .subSection(product.getSubSection())
                 .build()).collect(Collectors.toList());
     }
 }

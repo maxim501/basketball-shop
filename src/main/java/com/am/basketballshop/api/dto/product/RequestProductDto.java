@@ -22,4 +22,5 @@ public class RequestProductDto {
     private List<ColorDto> colors;
     private String description;
     private String subSectionId;
+    private Integer summa;
 }
