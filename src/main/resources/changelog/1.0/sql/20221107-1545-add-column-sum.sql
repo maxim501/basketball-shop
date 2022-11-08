@@ -1,1 +1,1 @@
-alter table PRODUCT add column SUM int after NOVELTY;
+alter table PRODUCT add column SUM int;

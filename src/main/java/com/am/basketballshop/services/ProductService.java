@@ -38,7 +38,7 @@ public class ProductService {
         Product product = new Product();
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
-        product.setSum(productDto.getSum());
+        product.setSumma(productDto.getSumma());
 
         product.setVendorCode(vendorCodeGenerator.generateVendorCode());
 
@@ -95,9 +95,7 @@ public class ProductService {
             throw new NotFoundException("Not found subSection by id = " + subSectionId);
         });
 
-        List<Product> productsBySubSectionId = productRepository.findAll()
-                .stream().filter(product -> product.getSubSection().getId()
-                        .equals(subSectionId)).collect(Collectors.toList());
+        List<Product> productsBySubSectionId = productRepository.productsBySubSection(subSectionId);
 
         return convertProductsListToResponse(productsBySubSectionId);
 
@@ -109,7 +107,7 @@ public class ProductService {
                 .company(product.getCompany())
                 .nameModel(product.getNameModel())
                 .novelty(product.getNovelty())
-                .sum(product.getSum())
+                .summa(product.getSumma())
                 .vendorCode(product.getVendorCode())
                 .colors(convertColorModelToDto(product.getColors()))
                 .description(product.getDescription())
@@ -131,7 +129,7 @@ public class ProductService {
                 .company(product.getCompany())
                 .nameModel(product.getNameModel())
                 .novelty(product.getNovelty())
-                .sum(product.getSum())
+                .summa(product.getSumma())
                 .vendorCode(product.getVendorCode())
                 .colors(convertColorModelToDto(product.getColors()))
                 .description(product.getDescription())

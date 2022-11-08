@@ -19,8 +19,8 @@ public class RequestProductDto {
     private String companyId;
     private String nameModel;
     private Boolean novelty;
-    private int sum;
     private List<ColorDto> colors;
     private String description;
     private String subSectionId;
+    private Integer summa;
 }

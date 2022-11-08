@@ -22,9 +22,9 @@ public class ResponseProductDto {
     private Company company;
     private String nameModel;
     private Boolean novelty;
-    private int sum;
     private String vendorCode;
     private List<ColorDto> colors;
     private String description;
     private SubSection subSection;
+    private Integer summa;
 }
