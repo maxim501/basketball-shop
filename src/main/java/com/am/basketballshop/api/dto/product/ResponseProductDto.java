@@ -1,7 +1,6 @@
 package com.am.basketballshop.api.dto.product;
 
-import com.am.basketballshop.api.dto.ColorDto;
-import com.am.basketballshop.model.product.Color;
+import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.model.product.Company;
 import com.am.basketballshop.model.product.SubSection;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,7 +22,7 @@ public class ResponseProductDto {
     private String nameModel;
     private Boolean novelty;
     private String vendorCode;
-    private List<ColorDto> colors;
+    private List<ProductModelDto> productModels;
     private String description;
     private SubSection subSection;
     private Integer summa;

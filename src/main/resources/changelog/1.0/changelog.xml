@@ -19,4 +19,13 @@
     <changeSet id="1.2.0" author="alexey.skvortsov" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221108-1615-rename-column-sum.sql"/>
     </changeSet>
+    <changeSet id="1.3" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221110-1445-rename-table-color-to-product_model-and-drop-fk-constraints.sql"/>
+    </changeSet>
+    <changeSet id="1.4" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221108-2130-create-table-size.sql"/>
+    </changeSet>
+    <changeSet id="1.5" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221108-2130-create-table-remainder_product-and-create-fk-constraints.sql"/>
+    </changeSet>
 </databaseChangeLog>

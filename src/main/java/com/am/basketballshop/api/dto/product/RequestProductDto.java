@@ -1,6 +1,6 @@
 package com.am.basketballshop.api.dto.product;
 
-import com.am.basketballshop.api.dto.ColorDto;
+import com.am.basketballshop.api.dto.ProductModelDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class RequestProductDto {
     private String companyId;
     private String nameModel;
     private Boolean novelty;
-    private List<ColorDto> colors;
+    private List<ProductModelDto> productModels;
     private String description;
     private String subSectionId;
     private Integer summa;

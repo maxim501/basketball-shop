@@ -1,5 +1,6 @@
 package com.am.basketballshop.api;
 
+import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.product.RequestProductDto;
 import com.am.basketballshop.api.dto.product.ResponseProductDto;
 import com.am.basketballshop.services.ProductService;
@@ -28,5 +29,10 @@ public class ProductController {
     @GetMapping(value = "/subsection/{subSectionId}")
     List<ResponseProductDto> getBySubSection(@PathVariable String subSectionId){
         return productService.getBySubSection(subSectionId);
+    }
+
+    @GetMapping(value = "/{productId}/remainder")
+    List<ProductModelDto> getRemainedColorProduct(@PathVariable String productId){
+        return productService.getRemainedColorProduct(productId);
     }
 }

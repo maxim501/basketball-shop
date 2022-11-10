@@ -3,16 +3,14 @@ package com.am.basketballshop.model.product;
 import com.am.basketballshop.model.base.BasedNanoIdEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
 @Data
-@Entity(name = "prd$color")
-@Table(name = "COLOR")
-public class Color extends BasedNanoIdEntity {
+@Entity(name = "prd$ProductModel")
+@Table(name = "PRODUCT_MODEL")
+public class ProductModel extends BasedNanoIdEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude

@@ -1,17 +1,11 @@
 package com.am.basketballshop.services;
 
-import com.am.basketballshop.api.dto.ColorDto;
+import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.product.RequestProductDto;
 import com.am.basketballshop.api.dto.product.ResponseProductDto;
 import com.am.basketballshop.exception.NotFoundException;
-import com.am.basketballshop.model.product.Color;
-import com.am.basketballshop.model.product.Company;
-import com.am.basketballshop.model.product.Product;
-import com.am.basketballshop.model.product.SubSection;
-import com.am.basketballshop.repository.ColorRepository;
-import com.am.basketballshop.repository.CompanyRepository;
-import com.am.basketballshop.repository.ProductRepository;
-import com.am.basketballshop.repository.SubSectionRepository;
+import com.am.basketballshop.model.product.*;
+import com.am.basketballshop.repository.*;
 import com.am.basketballshop.utils.VendorCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +23,10 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CompanyRepository companyRepository;
-    private final ColorRepository colorRepository;
+    private final ProductModelRepository productModelRepository;
     private final SubSectionRepository subSectionRepository;
+
+    private final RemainderProductRepository remainderProductRepository;
     private final VendorCodeGenerator vendorCodeGenerator;
 
     public ResponseProductDto createProduct(@RequestBody RequestProductDto productDto) {
@@ -63,16 +58,16 @@ public class ProductService {
             product.setSubSection(subSection);
         }
 
-        List<ColorDto> colorDtoList = productDto.getColors();
-        if (CollectionUtils.isNotEmpty(colorDtoList)) {
-            List<Color> colors = colorDtoList.stream().map(colorDto -> {
-                Color color = new Color();
-                color.setName(colorDto.getName());
-                color.setCode(colorDto.getCode());
-                color.setProduct(product);
-                return color;
+        List<ProductModelDto> productModelDtoList = productDto.getProductModels();
+        if (CollectionUtils.isNotEmpty(productModelDtoList)) {
+            List<ProductModel> productModels = productModelDtoList.stream().map(productModelDto -> {
+                ProductModel productModel = new ProductModel();
+                productModel.setName(productModelDto.getName());
+                productModel.setCode(productModelDto.getCode());
+                productModel.setProduct(product);
+                return productModel;
             }).collect(Collectors.toList());
-            product.setColors(colors);
+            product.setProductModels(productModels);
         }
 
         Product saveProduct = productRepository.save(product);
@@ -101,6 +96,23 @@ public class ProductService {
 
     }
 
+    public List<ProductModelDto> getRemainedColorProduct(String productID){
+        Product productById = productRepository.findById(productID).orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productID);
+        });
+
+        Set<ProductModel> allProductModelById = productModelRepository.findByProductId(productID);
+        Set<ProductModel> allProductModelByResponse = allProductModelById;
+
+        return allProductModelByResponse.stream().map(ProductModel -> ProductModelDto.builder()
+                .id(ProductModel.getId())
+                .code(ProductModel.getCode())
+                .name(ProductModel.getName())
+                .remainderProductList(remainderProductRepository.findByProductModelId(ProductModel.getId())
+                        .stream().collect(Collectors.toList()))
+                .build()).collect(Collectors.toList());
+    }
+
     private ResponseProductDto convertProductToResponse(Product product) {
         return ResponseProductDto.builder()
                 .id(product.getId())
@@ -109,17 +121,17 @@ public class ProductService {
                 .novelty(product.getNovelty())
                 .summa(product.getSumma())
                 .vendorCode(product.getVendorCode())
-                .colors(convertColorModelToDto(product.getColors()))
+                .productModels(convertProductModelToDto(product.getProductModels()))
                 .description(product.getDescription())
                 .subSection(product.getSubSection())
                 .build();
     }
 
-    private List<ColorDto> convertColorModelToDto(List<Color> colors) {
-        return colors.stream().map(color -> ColorDto.builder()
-                .id(color.getId())
-                .code(color.getCode())
-                .name(color.getName())
+    private List<ProductModelDto> convertProductModelToDto(List<ProductModel> productModels) {
+        return productModels.stream().map(productModel -> ProductModelDto.builder()
+                .id(productModel.getId())
+                .code(productModel.getCode())
+                .name(productModel.getName())
                 .build()).collect(Collectors.toList());
     }
 
@@ -131,7 +143,7 @@ public class ProductService {
                 .novelty(product.getNovelty())
                 .summa(product.getSumma())
                 .vendorCode(product.getVendorCode())
-                .colors(convertColorModelToDto(product.getColors()))
+                .productModels(convertProductModelToDto(product.getProductModels()))
                 .description(product.getDescription())
                 .subSection(product.getSubSection())
                 .build()).collect(Collectors.toList());

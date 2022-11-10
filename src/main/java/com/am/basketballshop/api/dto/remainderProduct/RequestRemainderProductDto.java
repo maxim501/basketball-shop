@@ -1,4 +1,4 @@
-package com.am.basketballshop.api.dto;
+package com.am.basketballshop.api.dto.remainderProduct;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ColorDto {
+public class RequestRemainderProductDto {
     private String id;
-    private String name;
-    private String code;
+    private String productModelId;
+    private String sizeId;
+    private String remainder;
 }
