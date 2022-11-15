@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Set;
 
-public interface RemainderProductRepository extends JpaRepository<RemainderProduct,String> {
+public interface RemainderProductRepository extends JpaRepository<RemainderProduct, String> {
 
     @Query("select c from prd$RemainderProduct c where c.productModel.id=:productModelId")
     Set<RemainderProduct> findByProductModelId(String productModelId);

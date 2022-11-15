@@ -30,11 +30,38 @@ public class RemainderProductService {
 
     public ResponseRemainderProductDto createRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto){
         RemainderProduct remainderProduct = new RemainderProduct();
+        setRemainderProduct(remainderProduct, remainderProductDto);
+
+        RemainderProduct saveRemainderProduct = remainderProductRepository.save(remainderProduct);
+
+        return convertRemainderProductToResponse(saveRemainderProduct);
+    }
+
+    public void updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
+        Optional<RemainderProduct> remainderProductById = remainderProductRepository.findById(remainderProductId);
+        RemainderProduct remainderProduct = remainderProductById.orElseThrow(() -> {
+            throw new NotFoundException("Not found remainder product by id = " + remainderProductId);
+        });
+        setRemainderProduct(remainderProduct, remainderProductDto);
+
+        RemainderProduct updateRemainderProduct = remainderProductRepository.save(remainderProduct);
+    }
+
+    public void deleteRemainderProduct(String remainderProductId) {
+        Optional<RemainderProduct> remainderProductById = remainderProductRepository.findById(remainderProductId);
+        RemainderProduct remainderProduct = remainderProductById.orElseThrow(() -> {
+            throw new NotFoundException("Not found remainder product by id = " + remainderProductId);
+        });
+
+        remainderProductRepository.delete(remainderProduct);
+    }
+
+    public void setRemainderProduct(RemainderProduct remainderProduct, RequestRemainderProductDto remainderProductDto) {
         String productModelId = remainderProductDto.getProductModelId();
         String sizeId = remainderProductDto.getSizeId();
         remainderProduct.setRemainder(remainderProductDto.getRemainder());
 
-        if (productModelId != null){
+        if (productModelId != null) {
             Optional<ProductModel> colorById = productModelRepository.findById(productModelId);
             ProductModel productModel = colorById.orElseThrow(() -> {
                 throw new NotFoundException("Not found product model by id = " + productModelId);

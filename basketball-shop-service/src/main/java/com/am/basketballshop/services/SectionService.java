@@ -43,19 +43,29 @@ public class SectionService {
                 .build();
     }
 
+    public void updateSection(String sectionId, SectionDto sectionDto) {
+        Optional<Section> sectionById = sectionRepository.findById(sectionId);
+        Section section = sectionById.orElseThrow(() -> {
+            throw new NotFoundException("Not found section by id = " + sectionId);
+        });
+        section.setName(sectionDto.getName());
+
+        Section updateSection = sectionRepository.save(section);
+    }
+
+    public void deleteSection(String sectionId) {
+        Optional<Section> sectionById = sectionRepository.findById(sectionId);
+        Section section = sectionById.orElseThrow(() -> {
+            throw new NotFoundException("Not found section by id = " + sectionId);
+        });
+
+        sectionRepository.delete(section);
+    }
+
 
     public ResponseSubSectionDto createSubSection(@RequestBody RequestSubSectionDto subSectionDto) {
         SubSection subSection = new SubSection();
-        subSection.setName(subSectionDto.getName());
-
-        String sectionId = subSectionDto.getSectionId();
-        if (sectionId != null) {
-            Optional<Section> sectionById = sectionRepository.findById(sectionId);
-            Section section = sectionById.orElseThrow(() -> {
-                throw new NotFoundException("Not found section by id = " + sectionId);
-            });
-            subSection.setSection(section);
-        }
+        setSubSection(subSection, subSectionDto);
 
         SubSection saveSubSection = subSectionRepository.save(subSection);
 
@@ -71,4 +81,37 @@ public class SectionService {
 
         return converter.entityToDto(subSection, ResponseSubSectionDto.class);
     }
+
+    public void updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
+        Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
+        SubSection subSection = subSectionById.orElseThrow(() -> {
+            throw new NotFoundException("Not found sub section by id = " + subSectionId);
+        });
+        setSubSection(subSection, subSectionDto);
+
+        SubSection updateSubSection = subSectionRepository.save(subSection);
+    }
+
+    public void deleteSubSection(String subSectionId) {
+        Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
+        SubSection subSection = subSectionById.orElseThrow(() -> {
+            throw new NotFoundException("Not found sub section by id = " + subSectionId);
+        });
+
+        subSectionRepository.delete(subSection);
+    }
+
+    public void setSubSection(SubSection subSection, RequestSubSectionDto subSectionDto) {
+        subSection.setName(subSectionDto.getName());
+
+        String sectionId = subSectionDto.getSectionId();
+        if (sectionId != null) {
+            Optional<Section> sectionById = sectionRepository.findById(sectionId);
+            Section section = sectionById.orElseThrow(() -> {
+                throw new NotFoundException("Not found section by id = " + sectionId);
+            });
+            subSection.setSection(section);
+        }
+    }
+
 }

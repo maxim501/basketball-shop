@@ -40,6 +40,71 @@ public class ProductService {
 
     public ResponseProductDto createProduct(@RequestBody RequestProductDto productDto) {
         Product product = new Product();
+        setProduct(product, productDto);
+
+        Product saveProduct = productRepository.save(product);
+
+        return convertProductToResponse(saveProduct);
+    }
+
+    public ResponseProductDto getProduct(String productId) {
+        Optional<Product> productById = productRepository.findById(productId);
+        Product product = productById.orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productId);
+        });
+
+        return convertProductToResponse(product);
+    }
+
+
+    public List<ResponseProductDto> getBySubSection(String subSectionId) {
+        SubSection subSectionById = subSectionRepository.findById(subSectionId).orElseThrow(() -> {
+            throw new NotFoundException("Not found subSection by id = " + subSectionId);
+        });
+
+        List<Product> productsBySubSectionId = productRepository.productsBySubSection(subSectionId);
+
+        return convertProductsListToResponse(productsBySubSectionId);
+
+    }
+
+    public List<ProductModelDto> getRemainderProductModel(String productId) {
+        Product productById = productRepository.findById(productId).orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productId);
+        });
+
+        Set<ProductModel> allProductModelById = productModelRepository.findByProductId(productId);
+        Set<ProductModel> allProductModelByResponse = allProductModelById;
+
+        return allProductModelByResponse.stream().map(ProductModel -> ProductModelDto.builder()
+                .id(ProductModel.getId())
+                .code(ProductModel.getCode())
+                .name(ProductModel.getName())
+                .remainderProductList(remainderProductRepository.findByProductModelId(ProductModel.getId())
+                        .stream().collect(Collectors.toList()))
+                .build()).collect(Collectors.toList());
+    }
+
+    public void updateProduct(String productId, RequestProductDto productDto) {
+        Optional<Product> productById = productRepository.findById(productId);
+        Product product = productById.orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productId);
+        });
+        setProduct(product, productDto);
+
+        Product updateProduct = productRepository.save(product);
+    }
+
+    public void deleteProduct(String productId) {
+        Optional<Product> productById = productRepository.findById(productId);
+        Product product = productById.orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productId);
+        });
+
+        productRepository.delete(product);
+    }
+
+    public void setProduct(Product product, RequestProductDto productDto) {
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
         product.setSumma(productDto.getSumma());
