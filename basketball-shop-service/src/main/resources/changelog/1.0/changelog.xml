@@ -31,4 +31,7 @@
     <changeSet id="1.6" author="alexey.skvortsov" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221114-2015-create-table-client.sql"/>
     </changeSet>
+    <changeSet id="1.7" author="maxim.solovyev" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221115-1645-rename-client-table.sql"/>
+    </changeSet>
 </databaseChangeLog>

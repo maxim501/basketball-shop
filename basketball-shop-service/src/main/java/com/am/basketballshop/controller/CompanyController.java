@@ -1,10 +1,11 @@
 package com.am.basketballshop.controller;
 
+import com.am.basketballshop.api.CompanyEndpoint;
+import com.am.basketballshop.api.dto.CompanyDto;
 import com.am.basketballshop.services.CompanyService;
-import com.am.basketbalshop.api.CompanyEndpoint;
-import com.am.basketbalshop.api.dto.CompanyDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,22 +15,22 @@ public class CompanyController implements CompanyEndpoint {
     private final CompanyService companyService;
 
     @Override
-    public CompanyDto createCompany(@RequestBody CompanyDto companyDto) {
+    public CompanyDto createCompany(CompanyDto companyDto) {
         return companyService.createCompany(companyDto);
     }
 
     @Override
-    CompanyDto getCompany(@PathVariable String companyId) {
+    public CompanyDto getCompany(String companyId) {
         return companyService.getCompany(companyId);
     }
 
-    @PutMapping(value = "/{companyId}")
-    void updateCompany(@PathVariable String companyId, @RequestBody CompanyDto companyDto) {
+    @Override
+    public void updateCompany(String companyId, CompanyDto companyDto) {
         companyService.updateCompany(companyId, companyDto);
     }
 
-    @DeleteMapping(value = "/{companyId}")
-    void deleteCompany(@PathVariable String companyId) {
+    @Override
+    public void deleteCompany(String companyId) {
         companyService.deleteCompany(companyId);
     }
 }

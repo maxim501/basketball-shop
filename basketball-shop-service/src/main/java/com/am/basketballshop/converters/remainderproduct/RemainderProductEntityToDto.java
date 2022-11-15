@@ -2,8 +2,8 @@ package com.am.basketballshop.converters.remainderproduct;
 
 import com.am.basketballshop.model.product.RemainderProduct;
 import com.am.basketballshop.model.product.Size;
-import com.am.basketbalshop.api.dto.SizeDto;
-import com.am.basketbalshop.api.dto.remainderProduct.ResponseRemainderProductDto;
+import com.am.basketballshop.api.dto.SizeDto;
+import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

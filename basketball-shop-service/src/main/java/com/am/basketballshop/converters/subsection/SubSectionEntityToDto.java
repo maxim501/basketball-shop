@@ -2,8 +2,8 @@ package com.am.basketballshop.converters.subsection;
 
 import com.am.basketballshop.model.product.Section;
 import com.am.basketballshop.model.product.SubSection;
-import com.am.basketbalshop.api.dto.SectionDto;
-import com.am.basketbalshop.api.dto.subSection.ResponseSubSectionDto;
+import com.am.basketballshop.api.dto.SectionDto;
+import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

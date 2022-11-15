@@ -1,6 +1,7 @@
 package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.SizeDto;
+import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Size;
 import com.am.basketballshop.repository.SizeRepository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class SizeService {
 
     private final SizeRepository sizeRepository;
+    private final UniversalConverter converter;
 
     public SizeDto createSize(SizeDto sizeDto) {
         Size size = new Size();
@@ -24,11 +26,7 @@ public class SizeService {
 
         Size saveSize = sizeRepository.save(size);
 
-        return SizeDto.builder()
-                .id(saveSize.getId())
-                .code(saveSize.getCode())
-                .name(saveSize.getName())
-                .build();
+        return converter.entityToDto(saveSize, SizeDto.class);
     }
 
     public void updateSize(String sizeId, SizeDto sizeDto) {

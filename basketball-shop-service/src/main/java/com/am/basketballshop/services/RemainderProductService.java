@@ -1,15 +1,15 @@
 package com.am.basketballshop.services;
 
+import com.am.basketballshop.api.dto.remainderProduct.RequestRemainderProductDto;
+import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
+import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.ProductModel;
 import com.am.basketballshop.model.product.RemainderProduct;
 import com.am.basketballshop.model.product.Size;
 import com.am.basketballshop.repository.ProductModelRepository;
 import com.am.basketballshop.repository.RemainderProductRepository;
 import com.am.basketballshop.repository.SizeRepository;
-import com.am.basketballshop.exception.NotFoundException;
-import com.am.basketbalshop.api.dto.remainderProduct.RequestRemainderProductDto;
-import com.am.basketbalshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,13 +28,13 @@ public class RemainderProductService {
     private final UniversalConverter converter;
 
 
-    public ResponseRemainderProductDto createRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto){
+    public ResponseRemainderProductDto createRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto) {
         RemainderProduct remainderProduct = new RemainderProduct();
         setRemainderProduct(remainderProduct, remainderProductDto);
 
         RemainderProduct saveRemainderProduct = remainderProductRepository.save(remainderProduct);
 
-        return convertRemainderProductToResponse(saveRemainderProduct);
+        return converter.entityToDto(saveRemainderProduct, ResponseRemainderProductDto.class);
     }
 
     public void updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
@@ -76,10 +76,6 @@ public class RemainderProductService {
             });
             remainderProduct.setSize(size);
         }
-
-        RemainderProduct saveRemainderProduct = remainderProductRepository.save(remainderProduct);
-
-        return converter.entityToDto(saveRemainderProduct, ResponseRemainderProductDto.class);
     }
 
 }

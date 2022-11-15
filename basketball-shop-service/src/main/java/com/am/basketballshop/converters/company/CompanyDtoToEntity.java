@@ -1,7 +1,7 @@
 package com.am.basketballshop.converters.company;
 
 import com.am.basketballshop.model.product.Company;
-import com.am.basketbalshop.api.dto.CompanyDto;
+import com.am.basketballshop.api.dto.CompanyDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

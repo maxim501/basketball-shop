@@ -1,7 +1,7 @@
 package com.am.basketballshop.converters.size;
 
 import com.am.basketballshop.model.product.Size;
-import com.am.basketbalshop.api.dto.SizeDto;
+import com.am.basketballshop.api.dto.SizeDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

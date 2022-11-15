@@ -4,7 +4,7 @@ import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Company;
 import com.am.basketballshop.repository.CompanyRepository;
-import com.am.basketbalshop.api.dto.CompanyDto;
+import com.am.basketballshop.api.dto.CompanyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

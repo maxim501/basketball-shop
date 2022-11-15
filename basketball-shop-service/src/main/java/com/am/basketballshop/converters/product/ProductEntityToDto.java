@@ -1,11 +1,11 @@
 package com.am.basketballshop.converters.product;
 
 import com.am.basketballshop.model.product.*;
-import com.am.basketbalshop.api.dto.CompanyDto;
-import com.am.basketbalshop.api.dto.ProductModelDto;
-import com.am.basketbalshop.api.dto.SectionDto;
-import com.am.basketbalshop.api.dto.product.ResponseProductDto;
-import com.am.basketbalshop.api.dto.subSection.ResponseSubSectionDto;
+import com.am.basketballshop.api.dto.CompanyDto;
+import com.am.basketballshop.api.dto.ProductModelDto;
+import com.am.basketballshop.api.dto.SectionDto;
+import com.am.basketballshop.api.dto.product.ResponseProductDto;
+import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
