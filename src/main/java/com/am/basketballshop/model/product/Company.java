@@ -2,8 +2,6 @@ package com.am.basketballshop.model.product;
 
 import com.am.basketballshop.model.base.BasedNanoIdEntity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

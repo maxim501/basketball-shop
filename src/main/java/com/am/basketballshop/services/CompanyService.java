@@ -40,4 +40,24 @@ public class CompanyService {
                 .name(company.getName())
                 .build();
     }
+
+    public void updateCompany(String companyId, CompanyDto companyDto) {
+        Optional<Company> companyById = companyRepository.findById(companyId);
+        Company company = companyById.orElseThrow(() -> {
+            throw new NotFoundException("Not found company by id = " + companyId);
+        });
+        company.setName(companyDto.getName());
+
+        Company updateCompany = companyRepository.save(company);
+    }
+
+    public void deleteCompany(String companyId) {
+        Optional<Company> companyById = companyRepository.findById(companyId);
+        Company company = companyById.orElseThrow(() -> {
+            throw new NotFoundException("Not found company by id = " + companyId);
+        });
+
+        companyRepository.delete(company);
+    }
+
 }

@@ -8,10 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Data
-@Entity(name = "prd@size")
+@Entity(name = "prd$size")
 @Table(name = "SIZE")
 public class Size extends BasedNanoIdEntity {
-
     @Column(name = "CODE")
     private String code;
 

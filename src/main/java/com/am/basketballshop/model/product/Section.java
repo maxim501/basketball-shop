@@ -2,13 +2,10 @@ package com.am.basketballshop.model.product;
 
 import com.am.basketballshop.model.base.BasedNanoIdEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @Entity(name = "prd$section")

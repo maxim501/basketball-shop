@@ -2,7 +2,6 @@ package com.am.basketballshop.model.base;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

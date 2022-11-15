@@ -18,7 +18,17 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/{companyId}")
-    CompanyDto getCompany(@RequestBody String companyId) {
+    CompanyDto getCompany(@PathVariable String companyId) {
         return companyService.getCompany(companyId);
+    }
+
+    @PutMapping(value = "/{companyId}")
+    void updateCompany(@PathVariable String companyId, @RequestBody CompanyDto companyDto) {
+        companyService.updateCompany(companyId, companyDto);
+    }
+
+    @DeleteMapping(value = "/{companyId}")
+    void deleteCompany(@PathVariable String companyId) {
+        companyService.deleteCompany(companyId);
     }
 }

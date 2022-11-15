@@ -26,13 +26,40 @@ public class RemainderProductService {
     private final SizeRepository sizeRepository;
 
 
-    public ResponseRemainderProductDto creatRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto){
+    public ResponseRemainderProductDto creatRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto) {
         RemainderProduct remainderProduct = new RemainderProduct();
+        setRemainderProduct(remainderProduct, remainderProductDto);
+
+        RemainderProduct saveRemainderProduct = remainderProductRepository.save(remainderProduct);
+
+        return convertRemainderProductToResponse(saveRemainderProduct);
+    }
+
+    public void updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
+        Optional<RemainderProduct> remainderProductById = remainderProductRepository.findById(remainderProductId);
+        RemainderProduct remainderProduct = remainderProductById.orElseThrow(() -> {
+            throw new NotFoundException("Not found remainder product by id = " + remainderProductId);
+        });
+        setRemainderProduct(remainderProduct, remainderProductDto);
+
+        RemainderProduct updateRemainderProduct = remainderProductRepository.save(remainderProduct);
+    }
+
+    public void deleteRemainderProduct(String remainderProductId) {
+        Optional<RemainderProduct> remainderProductById = remainderProductRepository.findById(remainderProductId);
+        RemainderProduct remainderProduct = remainderProductById.orElseThrow(() -> {
+            throw new NotFoundException("Not found remainder product by id = " + remainderProductId);
+        });
+
+        remainderProductRepository.delete(remainderProduct);
+    }
+
+    public void setRemainderProduct(RemainderProduct remainderProduct, RequestRemainderProductDto remainderProductDto) {
         String productModelId = remainderProductDto.getProductModelId();
         String sizeId = remainderProductDto.getSizeId();
         remainderProduct.setRemainder(remainderProductDto.getRemainder());
 
-        if (productModelId != null){
+        if (productModelId != null) {
             Optional<ProductModel> colorById = productModelRepository.findById(productModelId);
             ProductModel productModel = colorById.orElseThrow(() -> {
                 throw new NotFoundException("Not found product model by id = " + productModelId);
@@ -47,13 +74,9 @@ public class RemainderProductService {
             });
             remainderProduct.setSize(size);
         }
-
-        RemainderProduct saveRemainderProduct = remainderProductRepository.save(remainderProduct);
-
-        return convertRemainderProductToResponse(saveRemainderProduct);
     }
 
-    public ResponseRemainderProductDto convertRemainderProductToResponse(RemainderProduct remainderProduct){
+    public ResponseRemainderProductDto convertRemainderProductToResponse(RemainderProduct remainderProduct) {
         return ResponseRemainderProductDto.builder()
                 .id(remainderProduct.getId())
                 .productModel(remainderProduct.getProductModel())

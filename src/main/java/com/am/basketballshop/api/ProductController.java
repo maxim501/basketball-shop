@@ -27,12 +27,22 @@ public class ProductController {
     }
 
     @GetMapping(value = "/subsection/{subSectionId}")
-    List<ResponseProductDto> getBySubSection(@PathVariable String subSectionId){
+    List<ResponseProductDto> getBySubSection(@PathVariable String subSectionId) {
         return productService.getBySubSection(subSectionId);
     }
 
     @GetMapping(value = "/{productId}/remainder")
-    List<ProductModelDto> getRemainedColorProduct(@PathVariable String productId){
-        return productService.getRemainedColorProduct(productId);
+    List<ProductModelDto> getRemainderProductModel(@PathVariable String productId) {
+        return productService.getRemainderProductModel(productId);
+    }
+
+    @PutMapping(value = "/{productId}")
+    void updateProduct(@PathVariable String productId, @RequestBody RequestProductDto productDto) {
+        productService.updateProduct(productId, productDto);
+    }
+
+    @DeleteMapping(value = "/{productId}")
+    void deleteProduct(@PathVariable String productId) {
+        productService.deleteProduct(productId);
     }
 }

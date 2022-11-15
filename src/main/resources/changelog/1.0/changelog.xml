@@ -28,4 +28,7 @@
     <changeSet id="1.5" author="alexey.skvortsov" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221108-2130-create-table-remainder_product-and-create-fk-constraints.sql"/>
     </changeSet>
+    <changeSet id="1.6" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221114-2015-create-table-client.sql"/>
+    </changeSet>
 </databaseChangeLog>
