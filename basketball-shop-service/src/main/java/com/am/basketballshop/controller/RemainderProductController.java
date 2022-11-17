@@ -21,8 +21,8 @@ public class RemainderProductController implements RemainderProductEndpoint {
     }
 
     @Override
-    public void updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
-        remainderProductService.updateRemainderProduct(remainderProductId, remainderProductDto);
+    public ResponseRemainderProductDto updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
+        return remainderProductService.updateRemainderProduct(remainderProductId, remainderProductDto);
     }
 
     @Override

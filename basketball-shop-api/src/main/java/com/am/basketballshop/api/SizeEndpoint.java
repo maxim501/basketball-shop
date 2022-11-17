@@ -9,7 +9,7 @@ public interface SizeEndpoint {
     SizeDto createSize(@RequestBody SizeDto sizeDto);
 
     @PutMapping(value = "/{sizeId}")
-    void updateSize(@PathVariable String sizeId, @RequestBody SizeDto sizeDto);
+    SizeDto updateSize(@PathVariable String sizeId, @RequestBody SizeDto sizeDto);
 
     @DeleteMapping(value = "/{sizeId}")
     void deleteSize(@PathVariable String sizeId);

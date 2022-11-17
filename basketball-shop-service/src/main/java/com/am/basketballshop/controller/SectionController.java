@@ -27,8 +27,8 @@ public class SectionController implements SectionEndpoint {
     }
 
     @Override
-    public void updateSection(String sectionId, SectionDto sectionDto) {
-        sectionService.updateSection(sectionId, sectionDto);
+    public SectionDto updateSection(String sectionId, SectionDto sectionDto) {
+        return sectionService.updateSection(sectionId, sectionDto);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class SectionController implements SectionEndpoint {
     }
 
     @Override
-    public void updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
-        sectionService.updateSubSection(subSectionId, subSectionDto);
+    public ResponseSubSectionDto updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
+        return sectionService.updateSubSection(subSectionId, subSectionDto);
     }
 
     @Override

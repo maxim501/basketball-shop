@@ -25,8 +25,8 @@ public class CompanyController implements CompanyEndpoint {
     }
 
     @Override
-    public void updateCompany(String companyId, CompanyDto companyDto) {
-        companyService.updateCompany(companyId, companyDto);
+    public CompanyDto updateCompany(String companyId, CompanyDto companyDto) {
+        return companyService.updateCompany(companyId, companyDto);
     }
 
     @Override

@@ -1,19 +1,22 @@
-package com.am.basketballshop.api.dto.remainderProduct;
+package com.am.basketballshop.api.dto.comment;
 
-import com.am.basketballshop.api.dto.SizeDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseRemainderProductDto {
+public class RequestCommentDto {
+
     private String id;
-    private SizeDto size;
-    private Integer remainder;
+    private String productId;
+    private String massage;
+    private String userId;
 }

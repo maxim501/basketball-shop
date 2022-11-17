@@ -22,5 +22,5 @@ public class RemainderProduct extends BasedNanoIdEntity {
     private Size size;
 
     @Column(name = "REMAINDER")
-    private String remainder;
+    private Integer remainder;
 }

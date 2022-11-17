@@ -37,7 +37,7 @@ public class RemainderProductService {
         return converter.entityToDto(saveRemainderProduct, ResponseRemainderProductDto.class);
     }
 
-    public void updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
+    public ResponseRemainderProductDto updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
         Optional<RemainderProduct> remainderProductById = remainderProductRepository.findById(remainderProductId);
         RemainderProduct remainderProduct = remainderProductById.orElseThrow(() -> {
             throw new NotFoundException("Not found remainder product by id = " + remainderProductId);
@@ -45,6 +45,8 @@ public class RemainderProductService {
         setRemainderProduct(remainderProduct, remainderProductDto);
 
         RemainderProduct updateRemainderProduct = remainderProductRepository.save(remainderProduct);
+
+        return converter.entityToDto(updateRemainderProduct, ResponseRemainderProductDto.class);
     }
 
     public void deleteRemainderProduct(String remainderProductId) {
@@ -62,8 +64,8 @@ public class RemainderProductService {
         remainderProduct.setRemainder(remainderProductDto.getRemainder());
 
         if (productModelId != null) {
-            Optional<ProductModel> colorById = productModelRepository.findById(productModelId);
-            ProductModel productModel = colorById.orElseThrow(() -> {
+            Optional<ProductModel> productModelById = productModelRepository.findById(productModelId);
+            ProductModel productModel = productModelById.orElseThrow(() -> {
                 throw new NotFoundException("Not found product model by id = " + productModelId);
             });
             remainderProduct.setProductModel(productModel);

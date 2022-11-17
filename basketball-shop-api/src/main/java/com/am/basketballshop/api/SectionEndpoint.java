@@ -14,7 +14,7 @@ public interface SectionEndpoint {
     SectionDto getSection(@PathVariable String sectionId);
 
     @PutMapping(value = "/{sectionId}")
-    void updateSection(@PathVariable String sectionId, @RequestBody SectionDto sectionDto);
+    SectionDto updateSection(@PathVariable String sectionId, @RequestBody SectionDto sectionDto);
 
     @DeleteMapping(value = "/{sectionId}")
     void deleteSection(@PathVariable String sectionId);
@@ -26,7 +26,7 @@ public interface SectionEndpoint {
     ResponseSubSectionDto getSubSection(@PathVariable String subSectionId);
 
     @PutMapping(value = "/sub/{subSectionId}")
-    void updateSubSection(@PathVariable String subSectionId, @RequestBody RequestSubSectionDto subSectionDto);
+    ResponseSubSectionDto updateSubSection(@PathVariable String subSectionId, @RequestBody RequestSubSectionDto subSectionDto);
 
     @DeleteMapping(value = "/sub/{subSectionId}")
     void deleteSubSection(@PathVariable String subSectionId);

@@ -10,7 +10,7 @@ public interface RemainderProductEndpoint {
     ResponseRemainderProductDto createRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto);
 
     @PutMapping(value = "/{remainderProductId}")
-    void updateRemainderProduct(@PathVariable String remainderProductId, @RequestBody RequestRemainderProductDto remainderProductDto);
+    ResponseRemainderProductDto updateRemainderProduct(@PathVariable String remainderProductId, @RequestBody RequestRemainderProductDto remainderProductDto);
 
     @DeleteMapping(value = "/{remainderProductId}")
     void deleteRemainderProduct(@PathVariable String remainderProductId);

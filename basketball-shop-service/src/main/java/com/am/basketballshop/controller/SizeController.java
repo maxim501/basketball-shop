@@ -20,8 +20,8 @@ public class SizeController implements SizeEndpoint {
     }
 
     @Override
-    public void updateSize(String sizeId, SizeDto sizeDto) {
-        sizeService.updateSize(sizeId, sizeDto);
+    public SizeDto updateSize(String sizeId, SizeDto sizeDto) {
+        return sizeService.updateSize(sizeId, sizeDto);
     }
 
     @Override

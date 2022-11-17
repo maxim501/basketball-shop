@@ -1,0 +1,1 @@
+alter table REMAINDER_PRODUCT alter column REMAINDER type int using(REMAINDER::int);

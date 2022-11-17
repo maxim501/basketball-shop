@@ -15,5 +15,5 @@ public class RequestRemainderProductDto {
     private String id;
     private String productModelId;
     private String sizeId;
-    private String remainder;
+    private Integer remainder;
 }

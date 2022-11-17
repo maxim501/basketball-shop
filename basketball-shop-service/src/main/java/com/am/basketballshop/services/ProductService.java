@@ -40,7 +40,42 @@ public class ProductService {
 
     public ResponseProductDto createProduct(@RequestBody RequestProductDto productDto) {
         Product product = new Product();
-        setProduct(product, productDto);
+        product.setNameModel(productDto.getNameModel());
+        product.setNovelty(productDto.getNovelty());
+        product.setSumma(productDto.getSumma());
+        product.setVendorCode(vendorCodeGenerator.generateVendorCode());
+        product.setDescription(productDto.getDescription());
+
+        String companyId = productDto.getCompanyId();
+        String subSectionId = productDto.getSubSectionId();
+
+        if (companyId != null) {
+            Optional<Company> companyById = companyRepository.findById(companyId);
+            Company company = companyById.orElseThrow(() -> {
+                throw new NotFoundException("Not found company by id = " + companyId);
+            });
+            product.setCompany(company);
+        }
+
+        if (subSectionId != null) {
+            Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
+            SubSection subSection = subSectionById.orElseThrow(() -> {
+                throw new NotFoundException("Not found subSection by id = " + subSectionById);
+            });
+            product.setSubSection(subSection);
+        }
+
+        List<ProductModelDto> productModelDtoList = productDto.getProductModels();
+        if (CollectionUtils.isNotEmpty(productModelDtoList)) {
+            List<ProductModel> productModels = productModelDtoList.stream().map(productModelDto -> {
+                ProductModel productModel = new ProductModel();
+                productModel.setName(productModelDto.getName());
+                productModel.setCode(productModelDto.getCode());
+                productModel.setProduct(product);
+                return productModel;
+            }).collect(Collectors.toList());
+            product.setProductModels(productModels);
+        }
 
         Product saveProduct = productRepository.save(product);
 
@@ -81,30 +116,14 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void updateProduct(String productId, RequestProductDto productDto) {
+    public ResponseProductDto updateProduct(String productId, RequestProductDto productDto) {
         Optional<Product> productById = productRepository.findById(productId);
         Product product = productById.orElseThrow(() -> {
             throw new NotFoundException("Not found product by id = " + productId);
         });
-        setProduct(product, productDto);
-
-        Product updateProduct = productRepository.save(product);
-    }
-
-    public void deleteProduct(String productId) {
-        Optional<Product> productById = productRepository.findById(productId);
-        Product product = productById.orElseThrow(() -> {
-            throw new NotFoundException("Not found product by id = " + productId);
-        });
-
-        productRepository.delete(product);
-    }
-
-    public void setProduct(Product product, RequestProductDto productDto) {
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
         product.setSumma(productDto.getSumma());
-        product.setVendorCode(vendorCodeGenerator.generateVendorCode());
         product.setDescription(productDto.getDescription());
 
         String companyId = productDto.getCompanyId();
@@ -129,13 +148,45 @@ public class ProductService {
         List<ProductModelDto> productModelDtoList = productDto.getProductModels();
         if (CollectionUtils.isNotEmpty(productModelDtoList)) {
             List<ProductModel> productModels = productModelDtoList.stream().map(productModelDto -> {
-                ProductModel productModel = new ProductModel();
+                ProductModel productModel = product.getProductModels().stream().filter(updateModel ->
+                        updateModel.getId().equals(productModelDto.getId())).findAny().orElseThrow(() -> {
+                    throw new NotFoundException("Not found product model by id = " + productModelDto.getId());
+                });
                 productModel.setName(productModelDto.getName());
                 productModel.setCode(productModelDto.getCode());
-                productModel.setProduct(product);
                 return productModel;
             }).collect(Collectors.toList());
             product.setProductModels(productModels);
         }
+
+//        List<ProductModelDto> productModelDtoList = productDto.getProductModels();
+//        if (CollectionUtils.isNotEmpty(productModelDtoList)) {
+//            List<ProductModel> productModels = product.getProductModels();
+//            productModels.stream().map(updateModel -> {
+//                if (productModelDtoList.stream().anyMatch(productModelDto -> productModelDto.getId().equals(updateModel.getId()))) {
+//                    ProductModelDto productModelDto = productModelDtoList.stream()
+//                            .filter(productModelDto1 -> productModelDto1.getId()
+//                                    .equals(updateModel.getId())).findAny().get();
+//                    updateModel.setName(productModelDto.getName());
+//                    updateModel.setCode(productModelDto.getCode());
+//                }
+//                return updateModel;
+//            }).collect(Collectors.toList());
+//
+//            product.setProductModels(productModels);
+//        }
+
+        Product updateProduct = productRepository.save(product);
+
+        return converter.entityToDto(updateProduct, ResponseProductDto.class);
+    }
+
+    public void deleteProduct(String productId) {
+        Optional<Product> productById = productRepository.findById(productId);
+        Product product = productById.orElseThrow(() -> {
+            throw new NotFoundException("Not found product by id = " + productId);
+        });
+
+        productRepository.delete(product);
     }
 }
