@@ -2,16 +2,14 @@ package com.am.basketballshop.api.dto;
 
 import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
+@EqualsAndHashCode
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductModelDto {

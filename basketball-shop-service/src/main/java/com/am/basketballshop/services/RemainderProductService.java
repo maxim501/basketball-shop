@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,11 @@ public class RemainderProductService {
     private final SizeRepository sizeRepository;
     private final UniversalConverter converter;
 
+    public List<ResponseRemainderProductDto> getRemainderProduct(String productModelId) {
+        return remainderProductRepository.findByProductModelId(productModelId).stream()
+                .map(remainderProduct -> converter.entityToDto(remainderProduct, ResponseRemainderProductDto.class))
+                .collect(Collectors.toList());
+    }
 
     public ResponseRemainderProductDto createRemainderProduct(@RequestBody RequestRemainderProductDto remainderProductDto) {
         RemainderProduct remainderProduct = new RemainderProduct();

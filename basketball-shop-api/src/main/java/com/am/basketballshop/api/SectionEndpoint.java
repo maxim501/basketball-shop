@@ -5,6 +5,8 @@ import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 public interface SectionEndpoint {
 
     @PostMapping(value = "/")
@@ -12,6 +14,9 @@ public interface SectionEndpoint {
 
     @GetMapping(value = "/{sectionId}")
     SectionDto getSection(@PathVariable String sectionId);
+
+    @GetMapping(value = "/all")
+    List<SectionDto> getAllSections();
 
     @PutMapping(value = "/{sectionId}")
     void updateSection(@PathVariable String sectionId, @RequestBody SectionDto sectionDto);
@@ -24,6 +29,9 @@ public interface SectionEndpoint {
 
     @GetMapping(value = "/sub/{subSectionId}")
     ResponseSubSectionDto getSubSection(@PathVariable String subSectionId);
+
+    @GetMapping(value = "/{sectionId}/sub/all")
+    List<ResponseSubSectionDto> getAllSubSectionsBySection(@PathVariable String sectionId);
 
     @PutMapping(value = "/sub/{subSectionId}")
     void updateSubSection(@PathVariable String subSectionId, @RequestBody RequestSubSectionDto subSectionDto);

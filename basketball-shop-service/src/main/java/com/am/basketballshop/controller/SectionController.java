@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/section")
@@ -24,6 +26,11 @@ public class SectionController implements SectionEndpoint {
     @Override
     public SectionDto getSection(String sectionId) {
         return sectionService.getSection(sectionId);
+    }
+
+    @Override
+    public List<SectionDto> getAllSections() {
+        return sectionService.getAllSections();
     }
 
     @Override
@@ -44,6 +51,11 @@ public class SectionController implements SectionEndpoint {
     @Override
     public ResponseSubSectionDto getSubSection(String subSectionId) {
         return sectionService.getSubSection(subSectionId);
+    }
+
+    @Override
+    public List<ResponseSubSectionDto> getAllSubSectionsBySection(String sectionId) {
+        return sectionService.getAllSubSectionsBySection(sectionId);
     }
 
     @Override

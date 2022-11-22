@@ -1,21 +1,23 @@
 package com.am.basketballshop.services;
 
+import com.am.basketballshop.api.dto.SectionDto;
+import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
+import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Section;
 import com.am.basketballshop.model.product.SubSection;
 import com.am.basketballshop.repository.SectionRepository;
 import com.am.basketballshop.repository.SubSectionRepository;
-import com.am.basketballshop.api.dto.SectionDto;
-import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
-import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,12 @@ public class SectionService {
                 .id(section.getId())
                 .name(section.getName())
                 .build();
+    }
+
+    public List<SectionDto> getAllSections() {
+        return sectionRepository.findAll().stream()
+                .map(section -> converter.entityToDto(section, SectionDto.class))
+                .collect(Collectors.toList());
     }
 
     public void updateSection(String sectionId, SectionDto sectionDto) {
@@ -80,6 +88,12 @@ public class SectionService {
         });
 
         return converter.entityToDto(subSection, ResponseSubSectionDto.class);
+    }
+
+    public List<ResponseSubSectionDto> getAllSubSectionsBySection(String sectionId) {
+        return subSectionRepository.findBySectionId(sectionId).stream()
+                .map(subSection -> converter.entityToDto(subSection, ResponseSubSectionDto.class))
+                .collect(Collectors.toList());
     }
 
     public void updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {

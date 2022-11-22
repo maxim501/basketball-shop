@@ -8,12 +8,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/remainder")
 public class RemainderProductController implements RemainderProductEndpoint {
 
     private final RemainderProductService remainderProductService;
+
+    @Override
+    public List<ResponseRemainderProductDto> getRemainderProduct(String productModelId) {
+        return remainderProductService.getRemainderProduct(productModelId);
+    }
 
     @Override
     public ResponseRemainderProductDto createRemainderProduct(RequestRemainderProductDto remainderProductDto) {
