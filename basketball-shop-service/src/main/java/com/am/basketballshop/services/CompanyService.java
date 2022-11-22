@@ -1,10 +1,10 @@
 package com.am.basketballshop.services;
 
+import com.am.basketballshop.api.dto.CompanyDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Company;
 import com.am.basketballshop.repository.CompanyRepository;
-import com.am.basketballshop.api.dto.CompanyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class CompanyService {
         return converter.entityToDto(company, CompanyDto.class);
     }
 
-    public void updateCompany(String companyId, CompanyDto companyDto) {
+    public CompanyDto updateCompany(String companyId, CompanyDto companyDto) {
         Optional<Company> companyById = companyRepository.findById(companyId);
         Company company = companyById.orElseThrow(() -> {
             throw new NotFoundException("Not found company by id = " + companyId);
@@ -44,6 +44,8 @@ public class CompanyService {
         company.setName(companyDto.getName());
 
         Company updateCompany = companyRepository.save(company);
+
+        return converter.entityToDto(updateCompany, CompanyDto.class);
     }
 
     public void deleteCompany(String companyId) {

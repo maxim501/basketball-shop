@@ -51,7 +51,7 @@ public class SectionService {
                 .collect(Collectors.toList());
     }
 
-    public void updateSection(String sectionId, SectionDto sectionDto) {
+    public SectionDto updateSection(String sectionId, SectionDto sectionDto) {
         Optional<Section> sectionById = sectionRepository.findById(sectionId);
         Section section = sectionById.orElseThrow(() -> {
             throw new NotFoundException("Not found section by id = " + sectionId);
@@ -59,6 +59,8 @@ public class SectionService {
         section.setName(sectionDto.getName());
 
         Section updateSection = sectionRepository.save(section);
+
+        return converter.entityToDto(updateSection, SectionDto.class);
     }
 
     public void deleteSection(String sectionId) {
@@ -96,7 +98,7 @@ public class SectionService {
                 .collect(Collectors.toList());
     }
 
-    public void updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
+    public ResponseSubSectionDto updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
         Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
         SubSection subSection = subSectionById.orElseThrow(() -> {
             throw new NotFoundException("Not found sub section by id = " + subSectionId);
@@ -104,6 +106,8 @@ public class SectionService {
         setSubSection(subSection, subSectionDto);
 
         SubSection updateSubSection = subSectionRepository.save(subSection);
+
+        return converter.entityToDto(updateSubSection, ResponseSubSectionDto.class);
     }
 
     public void deleteSubSection(String subSectionId) {

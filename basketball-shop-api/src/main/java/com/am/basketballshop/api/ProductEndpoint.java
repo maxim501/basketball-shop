@@ -22,7 +22,7 @@ public interface ProductEndpoint {
     List<ProductModelDto> getRemainedColorProduct(@PathVariable String productId);
 
     @PutMapping(value = "/{productId}")
-    void updateProduct(@PathVariable String productId, @RequestBody RequestProductDto productDto);
+    ResponseProductDto updateProduct(@PathVariable String productId, @RequestBody RequestProductDto productDto);
 
     @DeleteMapping(value = "/{productId}")
     void deleteProduct(@PathVariable String productId);

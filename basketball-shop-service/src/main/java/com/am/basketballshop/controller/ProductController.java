@@ -39,8 +39,8 @@ public class ProductController implements ProductEndpoint {
     }
 
     @Override
-    public void updateProduct(String productId, RequestProductDto productDto) {
-        productService.updateProduct(productId, productDto);
+    public ResponseProductDto updateProduct(String productId, RequestProductDto productDto) {
+        return productService.updateProduct(productId, productDto);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface CompanyEndpoint {
     CompanyDto getCompany(@RequestBody String companyId);
 
     @PutMapping(value = "/{companyId}")
-    void updateCompany(@PathVariable String companyId, @RequestBody CompanyDto companyDto);
+    CompanyDto updateCompany(@PathVariable String companyId, @RequestBody CompanyDto companyDto);
 
     @DeleteMapping(value = "/{companyId}")
     void deleteCompany(@PathVariable String companyId);

@@ -29,7 +29,7 @@ public class SizeService {
         return converter.entityToDto(saveSize, SizeDto.class);
     }
 
-    public void updateSize(String sizeId, SizeDto sizeDto) {
+    public SizeDto updateSize(String sizeId, SizeDto sizeDto) {
         Optional<Size> sizeById = sizeRepository.findById(sizeId);
         Size size = sizeById.orElseThrow(() -> {
             throw new NotFoundException("Not found size by id = " + sizeId);
@@ -38,6 +38,8 @@ public class SizeService {
         size.setName(sizeDto.getName());
 
         Size updateSize = sizeRepository.save(size);
+
+        return converter.entityToDto(updateSize, SizeDto.class);
     }
 
     public void deleteSize(String sizeId) {
