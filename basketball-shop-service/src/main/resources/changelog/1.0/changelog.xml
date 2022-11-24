@@ -40,4 +40,10 @@
     <changeSet id="1.9" author="alexey.skvortsov" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221117-0435-create-table-comment-and-fk-constraints.sql"/>
     </changeSet>
+    <changeSet id="2.0" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221114-0200-create-table-attachments.sql"/>
+    </changeSet>
+    <changeSet id="2.1" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221114-0300-create-fk-constraint-for-attachments.sql"/>
+    </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,1 @@
+alter table ATTACHMENTS add constraint FK_ATTACHMENTS_PRODUCT_MODEL foreign key (PRODUCT_MODEL_ID) references PRODUCT_MODEL(ID);

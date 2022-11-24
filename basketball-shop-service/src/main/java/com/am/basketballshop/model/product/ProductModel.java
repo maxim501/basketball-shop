@@ -23,6 +23,10 @@ public class ProductModel extends BasedNanoIdEntity {
     @Column(name = "CODE")
     private String code;
 
+    @OneToOne(mappedBy = "productModel",cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Attachment attachment;
+
     public String getFullVendorCode() {
         if (product == null || StringUtils.isBlank(product.getVendorCode())) {
             return code;
