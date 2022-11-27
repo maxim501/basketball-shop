@@ -4,7 +4,7 @@ import com.am.basketballshop.model.product.*;
 import com.am.basketballshop.api.dto.CompanyDto;
 import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.SectionDto;
-import com.am.basketballshop.api.dto.product.ResponseProductDto;
+import com.am.basketballshop.api.dto.product.ProductDto;
 import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class ProductEntityToDto implements Converter<Product, ResponseProductDto> {
+public class ProductEntityToDto implements Converter<Product, ProductDto> {
 
     @Override
-    public ResponseProductDto convert(Product source) {
-        return ResponseProductDto.builder()
+    public ProductDto convert(Product source) {
+        return ProductDto.builder()
                 .id(source.getId())
                 .company(convert(source.getCompany()))
                 .nameModel(source.getNameModel())

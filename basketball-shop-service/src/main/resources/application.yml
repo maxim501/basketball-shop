@@ -39,3 +39,7 @@ spring:
     log-resolved-exception: true
     pathmatch:
       matching-strategy: ant_path_matcher
+
+attachment:
+  apiKey: key
+  host: http://

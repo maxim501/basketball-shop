@@ -1,7 +1,6 @@
 package com.am.basketballshop.api.dto.comment;
 
 import com.am.basketballshop.api.dto.UserDto;
-import com.am.basketballshop.api.dto.product.ResponseProductDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

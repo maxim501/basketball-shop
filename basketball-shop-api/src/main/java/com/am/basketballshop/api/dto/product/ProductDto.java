@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseProductDto {
+public class ProductDto {
     private String id;
     private CompanyDto company;
     private String nameModel;

@@ -2,7 +2,7 @@ package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.product.RequestProductDto;
-import com.am.basketballshop.api.dto.product.ResponseProductDto;
+import com.am.basketballshop.api.dto.product.ProductDto;
 import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
@@ -38,7 +38,7 @@ public class ProductService {
     private final RemainderProductRepository remainderProductRepository;
     private final VendorCodeGenerator vendorCodeGenerator;
 
-    public ResponseProductDto createProduct(@RequestBody RequestProductDto productDto) {
+    public ProductDto createProduct(@RequestBody RequestProductDto productDto) {
         Product product = new Product();
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
@@ -79,25 +79,25 @@ public class ProductService {
 
         Product saveProduct = productRepository.save(product);
 
-        return converter.entityToDto(saveProduct, ResponseProductDto.class);
+        return converter.entityToDto(saveProduct, ProductDto.class);
     }
 
-    public ResponseProductDto getProduct(String productId) {
+    public ProductDto getProduct(String productId) {
         Optional<Product> productById = productRepository.findById(productId);
         Product product = productById.orElseThrow(() -> {
             throw new NotFoundException("Not found product by id = " + productId);
         });
 
-        return converter.entityToDto(product, ResponseProductDto.class);
+        return converter.entityToDto(product, ProductDto.class);
     }
 
 
-    public List<ResponseProductDto> getBySubSection(String subSectionId) {
+    public List<ProductDto> getBySubSection(String subSectionId) {
         List<Product> productsBySubSectionId = productRepository.productsBySubSection(subSectionId);
 
         return productsBySubSectionId.stream()
                 .map(product ->
-                        converter.entityToDto(product, ResponseProductDto.class))
+                        converter.entityToDto(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -116,7 +116,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseProductDto updateProduct(String productId, RequestProductDto productDto) {
+    public ProductDto updateProduct(String productId, RequestProductDto productDto) {
         Optional<Product> productById = productRepository.findById(productId);
         Product product = productById.orElseThrow(() -> {
             throw new NotFoundException("Not found product by id = " + productId);
@@ -178,7 +178,7 @@ public class ProductService {
 
         Product updateProduct = productRepository.save(product);
 
-        return converter.entityToDto(updateProduct, ResponseProductDto.class);
+        return converter.entityToDto(updateProduct, ProductDto.class);
     }
 
     public void deleteProduct(String productId) {

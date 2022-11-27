@@ -3,7 +3,7 @@ package com.am.basketballshop.controller;
 import com.am.basketballshop.api.ProductEndpoint;
 import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.product.RequestProductDto;
-import com.am.basketballshop.api.dto.product.ResponseProductDto;
+import com.am.basketballshop.api.dto.product.ProductDto;
 import com.am.basketballshop.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,17 +19,17 @@ public class ProductController implements ProductEndpoint {
     private final ProductService productService;
 
     @Override
-    public ResponseProductDto createProduct(RequestProductDto productDto) {
+    public ProductDto createProduct(RequestProductDto productDto) {
         return productService.createProduct(productDto);
     }
 
     @Override
-    public ResponseProductDto getProduct(String productId) {
+    public ProductDto getProduct(String productId) {
         return productService.getProduct(productId);
     }
 
     @Override
-    public List<ResponseProductDto> getBySubSection(String subSectionId) {
+    public List<ProductDto> getBySubSection(String subSectionId) {
         return productService.getBySubSection(subSectionId);
     }
 
@@ -39,7 +39,7 @@ public class ProductController implements ProductEndpoint {
     }
 
     @Override
-    public ResponseProductDto updateProduct(String productId, RequestProductDto productDto) {
+    public ProductDto updateProduct(String productId, RequestProductDto productDto) {
         return productService.updateProduct(productId, productDto);
     }
 
