@@ -2,7 +2,6 @@ package com.am.basketballshop.controller;
 
 import com.am.basketballshop.api.ProductEndpoint;
 import com.am.basketballshop.api.dto.ProductModelDto;
-import com.am.basketballshop.api.dto.product.RequestProductDto;
 import com.am.basketballshop.api.dto.product.ProductDto;
 import com.am.basketballshop.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class ProductController implements ProductEndpoint {
     private final ProductService productService;
 
     @Override
-    public ProductDto createProduct(RequestProductDto productDto) {
+    public ProductDto createProduct(ProductDto productDto) {
         return productService.createProduct(productDto);
     }
 
@@ -39,7 +38,7 @@ public class ProductController implements ProductEndpoint {
     }
 
     @Override
-    public ProductDto updateProduct(String productId, RequestProductDto productDto) {
+    public ProductDto updateProduct(String productId, ProductDto productDto) {
         return productService.updateProduct(productId, productDto);
     }
 

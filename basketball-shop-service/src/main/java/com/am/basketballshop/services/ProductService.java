@@ -1,7 +1,6 @@
 package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.ProductModelDto;
-import com.am.basketballshop.api.dto.product.RequestProductDto;
 import com.am.basketballshop.api.dto.product.ProductDto;
 import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
@@ -38,16 +37,20 @@ public class ProductService {
     private final RemainderProductRepository remainderProductRepository;
     private final VendorCodeGenerator vendorCodeGenerator;
 
-    public ProductDto createProduct(@RequestBody RequestProductDto productDto) {
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
         Product product = new Product();
+        if (productDto.getId() != null) {
+            product.setId(productDto.getId());
+        }
+
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
         product.setSumma(productDto.getSumma());
         product.setVendorCode(vendorCodeGenerator.generateVendorCode());
         product.setDescription(productDto.getDescription());
 
-        String companyId = productDto.getCompanyId();
-        String subSectionId = productDto.getSubSectionId();
+        String companyId = productDto.getCompany() != null ? productDto.getCompany().getId() : null;
+        String subSectionId = productDto.getSubSection() != null ? productDto.getSubSection().getId() : null;
 
         if (companyId != null) {
             Optional<Company> companyById = companyRepository.findById(companyId);
@@ -116,7 +119,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDto updateProduct(String productId, RequestProductDto productDto) {
+    public ProductDto updateProduct(String productId, ProductDto productDto) {
         Optional<Product> productById = productRepository.findById(productId);
         Product product = productById.orElseThrow(() -> {
             throw new NotFoundException("Not found product by id = " + productId);
@@ -126,8 +129,8 @@ public class ProductService {
         product.setSumma(productDto.getSumma());
         product.setDescription(productDto.getDescription());
 
-        String companyId = productDto.getCompanyId();
-        String subSectionId = productDto.getSubSectionId();
+        String companyId = productDto.getCompany() != null ? productDto.getCompany().getId() : null;
+        String subSectionId = productDto.getSubSection() != null ? productDto.getSubSection().getId() : null;
 
         if (companyId != null) {
             Optional<Company> companyById = companyRepository.findById(companyId);

@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -18,6 +20,12 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final UniversalConverter converter;
+
+    public List<CompanyDto> getAllCompanies() {
+        return companyRepository.findAll().stream()
+                .map(c -> converter.entityToDto(c, CompanyDto.class))
+                .collect(Collectors.toList());
+    }
 
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company company = converter.dtoToEntity(companyDto, Company.class);

@@ -7,12 +7,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/company")
 public class CompanyController implements CompanyEndpoint {
 
     private final CompanyService companyService;
+
+    @Override
+    public List<CompanyDto> getAllCompanies() {
+        return companyService.getAllCompanies();
+    }
 
     @Override
     public CompanyDto createCompany(CompanyDto companyDto) {

@@ -3,7 +3,12 @@ package com.am.basketballshop.api;
 import com.am.basketballshop.api.dto.CompanyDto;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 public interface CompanyEndpoint {
+
+    @GetMapping(value = "/all")
+    List<CompanyDto> getAllCompanies();
 
     @PostMapping(value = "/")
     CompanyDto createCompany(@RequestBody CompanyDto companyDto);
