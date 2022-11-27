@@ -39,9 +39,6 @@ public class ProductService {
 
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
         Product product = new Product();
-        if (productDto.getId() != null) {
-            product.setId(productDto.getId());
-        }
 
         product.setNameModel(productDto.getNameModel());
         product.setNovelty(productDto.getNovelty());
