@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class ResponseAttachmentDto {
     private String id;
     private LocalDate uploadDate;
+    private boolean isPreviewImage;
     private String extension;
     private Long size;
     private String downloadLink;

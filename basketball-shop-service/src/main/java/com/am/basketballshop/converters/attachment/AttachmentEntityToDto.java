@@ -10,6 +10,7 @@ public class AttachmentEntityToDto implements Converter<Attachment, ResponseAtta
         return ResponseAttachmentDto.builder()
                 .id(source.getId())
                 .uploadDate(source.getUploadDate())
+                .isPreviewImage(source.isPreviewImage())
                 .extension(source.getExtension())
                 .size(source.getSize())
                 .downloadLink(source.getDownloadLink())
