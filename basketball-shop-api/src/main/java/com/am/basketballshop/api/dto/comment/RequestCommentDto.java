@@ -14,7 +14,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RequestCommentDto {
-
     private String id;
     private String productId;
     private String massage;

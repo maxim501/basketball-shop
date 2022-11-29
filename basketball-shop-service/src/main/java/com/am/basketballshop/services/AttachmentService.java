@@ -2,6 +2,7 @@ package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.attachments.RequestAttachmentDto;
 import com.am.basketballshop.api.dto.attachments.ResponseAttachmentDto;
+import com.am.basketballshop.config.AttachmentConfig;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Attachment;
@@ -31,6 +32,7 @@ import java.util.Optional;
 @Slf4j
 public class AttachmentService {
 
+    private final AttachmentConfig attachmentConfig;
     private final AttachmentRepository attachmentRepository;
 
     private final ProductModelRepository modelRepository;
@@ -51,15 +53,15 @@ public class AttachmentService {
         attachment.setUploadDate(LocalDate.now());
         attachment.setExtension(attachmentDto.getMultipartFile().getContentType());
         attachment.setSize(attachmentDto.getMultipartFile().getSize());
+        attachment.setPreviewImage(attachmentDto.isPreviewImage());
 
-        String uri = "https://freeimage.host/api/1/upload";
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(uri);
+        HttpPost httpPost = new HttpPost(attachmentConfig.getHost());
         HttpEntity entity = MultipartEntityBuilder.create()
                 .addBinaryBody("source", attachmentDto.getMultipartFile().getBytes(),
                         ContentType.create(attachment.getTitle() + "/png"),
                         attachment.getTitle() + ".png")
-                .addTextBody("key", "6d207e02198a847aa98d0a2a901485a5")
+                .addTextBody("key", attachmentConfig.getApiKey())
                 .build();
         httpPost.setEntity(entity);
         HttpResponse httpResponse = httpClient.execute(httpPost);

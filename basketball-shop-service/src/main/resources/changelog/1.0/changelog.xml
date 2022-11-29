@@ -46,4 +46,7 @@
     <changeSet id="2.1" author="alexey.skvortsov" context="core">
         <sqlFile path="classpath:/changelog/1.0/sql/20221114-0300-create-fk-constraint-for-attachments.sql"/>
     </changeSet>
+    <changeSet id="2.2" author="alexey.skvortsov" context="core">
+        <sqlFile path="classpath:/changelog/1.0/sql/20221119-2000-correct-table-attachments.sql"/>
+    </changeSet>
 </databaseChangeLog>
