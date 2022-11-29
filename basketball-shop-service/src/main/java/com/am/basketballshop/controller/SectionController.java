@@ -2,8 +2,7 @@ package com.am.basketballshop.controller;
 
 import com.am.basketballshop.api.SectionEndpoint;
 import com.am.basketballshop.api.dto.SectionDto;
-import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
-import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
+import com.am.basketballshop.api.dto.subSection.SubSectionDto;
 import com.am.basketballshop.services.SectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,22 +43,22 @@ public class SectionController implements SectionEndpoint {
     }
 
     @Override
-    public ResponseSubSectionDto createSubSection(RequestSubSectionDto subSectionDto) {
+    public SubSectionDto createSubSection(SubSectionDto subSectionDto) {
         return sectionService.createSubSection(subSectionDto);
     }
 
     @Override
-    public ResponseSubSectionDto getSubSection(String subSectionId) {
+    public SubSectionDto getSubSection(String subSectionId) {
         return sectionService.getSubSection(subSectionId);
     }
 
     @Override
-    public List<ResponseSubSectionDto> getAllSubSectionsBySection(String sectionId) {
+    public List<SubSectionDto> getAllSubSectionsBySection(String sectionId) {
         return sectionService.getAllSubSectionsBySection(sectionId);
     }
 
     @Override
-    public ResponseSubSectionDto updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
+    public SubSectionDto updateSubSection(String subSectionId, SubSectionDto subSectionDto) {
         return sectionService.updateSubSection(subSectionId, subSectionDto);
     }
 

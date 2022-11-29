@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseSubSectionDto {
+public class SubSectionDto {
 
     private String id;
     private SectionDto section;

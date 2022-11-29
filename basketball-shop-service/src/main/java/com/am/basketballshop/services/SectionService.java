@@ -1,8 +1,7 @@
 package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.SectionDto;
-import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
-import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
+import com.am.basketballshop.api.dto.subSection.SubSectionDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Section;
@@ -73,32 +72,32 @@ public class SectionService {
     }
 
 
-    public ResponseSubSectionDto createSubSection(@RequestBody RequestSubSectionDto subSectionDto) {
+    public SubSectionDto createSubSection(@RequestBody SubSectionDto subSectionDto) {
         SubSection subSection = new SubSection();
         setSubSection(subSection, subSectionDto);
 
         SubSection saveSubSection = subSectionRepository.save(subSection);
 
-        return converter.entityToDto(saveSubSection, ResponseSubSectionDto.class);
+        return converter.entityToDto(saveSubSection, SubSectionDto.class);
     }
 
 
-    public ResponseSubSectionDto getSubSection(@PathVariable String subSectionId) {
+    public SubSectionDto getSubSection(@PathVariable String subSectionId) {
         Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
         SubSection subSection = subSectionById.orElseThrow(() -> {
             throw new NotFoundException("Not found sub section by id = " + subSectionId);
         });
 
-        return converter.entityToDto(subSection, ResponseSubSectionDto.class);
+        return converter.entityToDto(subSection, SubSectionDto.class);
     }
 
-    public List<ResponseSubSectionDto> getAllSubSectionsBySection(String sectionId) {
+    public List<SubSectionDto> getAllSubSectionsBySection(String sectionId) {
         return subSectionRepository.findBySectionId(sectionId).stream()
-                .map(subSection -> converter.entityToDto(subSection, ResponseSubSectionDto.class))
+                .map(subSection -> converter.entityToDto(subSection, SubSectionDto.class))
                 .collect(Collectors.toList());
     }
 
-    public ResponseSubSectionDto updateSubSection(String subSectionId, RequestSubSectionDto subSectionDto) {
+    public SubSectionDto updateSubSection(String subSectionId, SubSectionDto subSectionDto) {
         Optional<SubSection> subSectionById = subSectionRepository.findById(subSectionId);
         SubSection subSection = subSectionById.orElseThrow(() -> {
             throw new NotFoundException("Not found sub section by id = " + subSectionId);
@@ -107,7 +106,7 @@ public class SectionService {
 
         SubSection updateSubSection = subSectionRepository.save(subSection);
 
-        return converter.entityToDto(updateSubSection, ResponseSubSectionDto.class);
+        return converter.entityToDto(updateSubSection, SubSectionDto.class);
     }
 
     public void deleteSubSection(String subSectionId) {
@@ -119,10 +118,10 @@ public class SectionService {
         subSectionRepository.delete(subSection);
     }
 
-    public void setSubSection(SubSection subSection, RequestSubSectionDto subSectionDto) {
+    public void setSubSection(SubSection subSection, SubSectionDto subSectionDto) {
         subSection.setName(subSectionDto.getName());
 
-        String sectionId = subSectionDto.getSectionId();
+        String sectionId = subSectionDto.getSection().getId();
         if (sectionId != null) {
             Optional<Section> sectionById = sectionRepository.findById(sectionId);
             Section section = sectionById.orElseThrow(() -> {

@@ -17,6 +17,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -135,6 +136,8 @@ public class ProductService {
                 throw new NotFoundException("Not found company by id = " + companyId);
             });
             product.setCompany(company);
+        } else {
+            product.setCompany(null);
         }
 
         if (subSectionId != null) {
@@ -146,35 +149,16 @@ public class ProductService {
         }
 
         List<ProductModelDto> productModelDtoList = productDto.getProductModels();
-        if (CollectionUtils.isNotEmpty(productModelDtoList)) {
+        if (CollectionUtils.isEmpty(productModelDtoList)) {
+            productDto.setProductModels(new ArrayList<>());
+        } else {
             List<ProductModel> productModels = productModelDtoList.stream().map(productModelDto -> {
-                ProductModel productModel = product.getProductModels().stream().filter(updateModel ->
-                        updateModel.getId().equals(productModelDto.getId())).findAny().orElseThrow(() -> {
-                    throw new NotFoundException("Not found product model by id = " + productModelDto.getId());
-                });
-                productModel.setName(productModelDto.getName());
-                productModel.setCode(productModelDto.getCode());
+                ProductModel productModel = converter.dtoToEntity(productModelDto, ProductModel.class);
+                productModel.setProduct(product);
                 return productModel;
             }).collect(Collectors.toList());
             product.setProductModels(productModels);
         }
-
-//        List<ProductModelDto> productModelDtoList = productDto.getProductModels();
-//        if (CollectionUtils.isNotEmpty(productModelDtoList)) {
-//            List<ProductModel> productModels = product.getProductModels();
-//            productModels.stream().map(updateModel -> {
-//                if (productModelDtoList.stream().anyMatch(productModelDto -> productModelDto.getId().equals(updateModel.getId()))) {
-//                    ProductModelDto productModelDto = productModelDtoList.stream()
-//                            .filter(productModelDto1 -> productModelDto1.getId()
-//                                    .equals(updateModel.getId())).findAny().get();
-//                    updateModel.setName(productModelDto.getName());
-//                    updateModel.setCode(productModelDto.getCode());
-//                }
-//                return updateModel;
-//            }).collect(Collectors.toList());
-//
-//            product.setProductModels(productModels);
-//        }
 
         Product updateProduct = productRepository.save(product);
 

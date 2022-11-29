@@ -1,8 +1,7 @@
 package com.am.basketballshop.api;
 
 import com.am.basketballshop.api.dto.SectionDto;
-import com.am.basketballshop.api.dto.subSection.ResponseSubSectionDto;
-import com.am.basketballshop.api.dto.subSection.RequestSubSectionDto;
+import com.am.basketballshop.api.dto.subSection.SubSectionDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,16 +24,16 @@ public interface SectionEndpoint {
     void deleteSection(@PathVariable String sectionId);
 
     @PostMapping(value = "/sub")
-    ResponseSubSectionDto createSubSection(@RequestBody RequestSubSectionDto subSectionDto);
+    SubSectionDto createSubSection(@RequestBody SubSectionDto subSectionDto);
 
     @GetMapping(value = "/sub/{subSectionId}")
-    ResponseSubSectionDto getSubSection(@PathVariable String subSectionId);
+    SubSectionDto getSubSection(@PathVariable String subSectionId);
 
     @GetMapping(value = "/{sectionId}/sub/all")
-    List<ResponseSubSectionDto> getAllSubSectionsBySection(@PathVariable String sectionId);
+    List<SubSectionDto> getAllSubSectionsBySection(@PathVariable String sectionId);
 
     @PutMapping(value = "/sub/{subSectionId}")
-    ResponseSubSectionDto updateSubSection(@PathVariable String subSectionId, @RequestBody RequestSubSectionDto subSectionDto);
+    SubSectionDto updateSubSection(@PathVariable String subSectionId, @RequestBody SubSectionDto subSectionDto);
 
     @DeleteMapping(value = "/sub/{subSectionId}")
     void deleteSubSection(@PathVariable String subSectionId);
