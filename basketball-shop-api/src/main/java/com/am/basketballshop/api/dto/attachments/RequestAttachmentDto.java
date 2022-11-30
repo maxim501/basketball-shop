@@ -16,5 +16,4 @@ public class RequestAttachmentDto {
     private String id;
     private String productModelId;
     private boolean isPreviewImage;
-    private MultipartFile multipartFile;
 }

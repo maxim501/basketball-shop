@@ -22,6 +22,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class AttachmentService {
 
     private final UniversalConverter converter;
 
-    public ResponseAttachmentDto createAttachment(RequestAttachmentDto attachmentDto) throws IOException {
+    public ResponseAttachmentDto createAttachment(RequestAttachmentDto attachmentDto, MultipartFile file) throws IOException {
 
         Optional<ProductModel> productModelById = modelRepository.findById(attachmentDto.getProductModelId());
         ProductModel productModel = productModelById.orElseThrow(() -> {
@@ -49,16 +50,16 @@ public class AttachmentService {
         Attachment attachment = new Attachment();
         attachment.setProductModel(productModel);
         attachment.setTitle("attach_" + LocalDate.now() + "_" +
-                attachmentDto.getMultipartFile().getOriginalFilename().toLowerCase().replaceAll(" ", "-"));
+                file.getOriginalFilename().toLowerCase().replaceAll(" ", "-"));
         attachment.setUploadDate(LocalDate.now());
-        attachment.setExtension(attachmentDto.getMultipartFile().getContentType());
-        attachment.setSize(attachmentDto.getMultipartFile().getSize());
+        attachment.setExtension(file.getContentType());
+        attachment.setSize(file.getSize());
         attachment.setPreviewImage(attachmentDto.isPreviewImage());
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(attachmentConfig.getHost());
         HttpEntity entity = MultipartEntityBuilder.create()
-                .addBinaryBody("source", attachmentDto.getMultipartFile().getBytes(),
+                .addBinaryBody("source", file.getBytes(),
                         ContentType.create(attachment.getTitle() + "/png"),
                         attachment.getTitle() + ".png")
                 .addTextBody("key", attachmentConfig.getApiKey())
@@ -71,7 +72,10 @@ public class AttachmentService {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(jsonString);
-        attachment.setDownloadLink(jsonNode.get(attachment.getTitle()).get("url").asText());
+        JsonNode imageNode = jsonNode.get("image");
+        if (imageNode != null) {
+            attachment.setDownloadLink(imageNode.get("url").asText());
+        }
 
         Attachment saveAttachment = attachmentRepository.save(attachment);
         return converter.entityToDto(saveAttachment, ResponseAttachmentDto.class);
