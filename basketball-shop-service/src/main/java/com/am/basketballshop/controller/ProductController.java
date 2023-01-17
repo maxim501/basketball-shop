@@ -18,6 +18,11 @@ public class ProductController implements ProductEndpoint {
     private final ProductService productService;
 
     @Override
+    public ProductModelDto getProductModel(String productModelId){
+        return productService.getProductModel(productModelId);
+    }
+
+    @Override
     public ProductDto createProduct(ProductDto productDto) {
         return productService.createProduct(productDto);
     }

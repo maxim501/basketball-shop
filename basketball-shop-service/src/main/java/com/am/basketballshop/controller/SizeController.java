@@ -7,12 +7,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/size")
 public class SizeController implements SizeEndpoint {
 
     private final SizeService sizeService;
+
+    @Override
+    public List<SizeDto> getAllSizes() {
+        return sizeService.getAllSizes();
+    }
+
+    @Override
+    public SizeDto getSize(String sizeId) {
+        return sizeService.getSize(sizeId);
+    }
 
     @Override
     public SizeDto createSize(SizeDto sizeDto) {

@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,21 @@ public class SizeService {
 
     private final SizeRepository sizeRepository;
     private final UniversalConverter converter;
+
+    public List<SizeDto> getAllSizes() {
+        return sizeRepository.findAll().stream()
+                .map(c -> converter.entityToDto(c, SizeDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public SizeDto getSize(String sizeId) {
+        Optional<Size> sizeById = sizeRepository.findById(sizeId);
+        Size size = sizeById.orElseThrow(() -> {
+            throw new NotFoundException("Not found size by id = " + sizeId);
+        });
+
+        return converter.entityToDto(size, SizeDto.class);
+    }
 
     public SizeDto createSize(SizeDto sizeDto) {
         Size size = new Size();

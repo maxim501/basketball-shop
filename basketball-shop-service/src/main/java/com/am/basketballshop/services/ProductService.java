@@ -2,7 +2,7 @@ package com.am.basketballshop.services;
 
 import com.am.basketballshop.api.dto.ProductModelDto;
 import com.am.basketballshop.api.dto.product.ProductDto;
-import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
+import com.am.basketballshop.api.dto.remainderProduct.RemainderProductDto;
 import com.am.basketballshop.converters.base.UniversalConverter;
 import com.am.basketballshop.exception.NotFoundException;
 import com.am.basketballshop.model.product.Company;
@@ -37,6 +37,32 @@ public class ProductService {
 
     private final RemainderProductRepository remainderProductRepository;
     private final VendorCodeGenerator vendorCodeGenerator;
+
+    public ProductModelDto getProductModel(String productModelId) {
+        Optional<ProductModel> productModelById = productModelRepository.findById(productModelId);
+        ProductModel productModel = productModelById.orElseThrow(() -> {
+            throw new NotFoundException("Not found product model by id = " + productModelId);
+        });
+        System.out.println();
+        System.out.println(converter.entityToDto(productModel, ProductModelDto.class));
+        System.out.println();
+
+        return converter.entityToDto(productModel, ProductModelDto.class);
+//        return ProductModelDto.builder()
+//                .id(productModel.getId())
+//                .name(productModel.getName())
+//                .code(productModel.getCode())
+//                .remainderProductList(remainderProductRepository.findByProductModelId(productModel.getId()).stream().
+//                        map(remainderProduct -> {
+//                    RemainderProductDto
+//                            .builder()
+//                            .id(remainderProduct.getId())
+//                            .productModelId(remainderProduct.getId())
+//                            .remainder(remainderProduct.getRemainder())
+//                            .build();
+//                }).collect(Collectors.toList())
+//                .build();
+    }
 
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
         Product product = new Product();
@@ -110,7 +136,7 @@ public class ProductService {
                     ProductModelDto productModelDto = converter.entityToDto(productModel, ProductModelDto.class);
                     productModelDto.setRemainderProductList(
                             remainderProductRepository.findByProductModelId(productModel.getId()).stream()
-                                    .map(remainderProduct -> converter.entityToDto(remainderProduct, ResponseRemainderProductDto.class))
+                                    .map(remainderProduct -> converter.entityToDto(remainderProduct, RemainderProductDto.class))
                                     .collect(Collectors.toList()));
                     return productModelDto;
                 })

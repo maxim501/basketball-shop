@@ -1,23 +1,24 @@
 package com.am.basketballshop.converters.remainderproduct;
 
+import com.am.basketballshop.api.dto.SizeDto;
+import com.am.basketballshop.api.dto.remainderProduct.RemainderProductDto;
 import com.am.basketballshop.model.product.RemainderProduct;
 import com.am.basketballshop.model.product.Size;
-import com.am.basketballshop.api.dto.SizeDto;
-import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RemainderProductEntityToDto implements Converter<RemainderProduct, ResponseRemainderProductDto> {
+public class RemainderProductEntityToDto implements Converter<RemainderProduct, RemainderProductDto> {
 
     @Override
-    public ResponseRemainderProductDto convert(RemainderProduct source) {
-        return ResponseRemainderProductDto.builder()
+    public RemainderProductDto convert(RemainderProduct source) {
+        return RemainderProductDto.builder()
                 .id(source.getId())
+                .productModelId(source.getProductModel().getId())
                 .remainder(source.getRemainder())
-                .size(convert(source.getSize()))
+                .sizeId(convert(source.getSize()))
                 .build();
     }
 

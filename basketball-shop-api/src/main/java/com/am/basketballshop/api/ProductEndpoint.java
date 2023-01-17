@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface ProductEndpoint {
 
+    @GetMapping(value = "/productModel/{productModelId}")
+    ProductModelDto getProductModel(@PathVariable String productModelId);
+
     @PostMapping(value = "/")
     ProductDto createProduct(@RequestBody ProductDto productDto);
 

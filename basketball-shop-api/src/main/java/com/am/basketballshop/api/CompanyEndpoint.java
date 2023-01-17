@@ -14,7 +14,7 @@ public interface CompanyEndpoint {
     CompanyDto createCompany(@RequestBody CompanyDto companyDto);
 
     @GetMapping(value = "/{companyId}")
-    CompanyDto getCompany(@RequestBody String companyId);
+    CompanyDto getCompany(@PathVariable String companyId);
 
     @PutMapping(value = "/{companyId}")
     CompanyDto updateCompany(@PathVariable String companyId, @RequestBody CompanyDto companyDto);

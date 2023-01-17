@@ -1,8 +1,7 @@
 package com.am.basketballshop.controller;
 
 import com.am.basketballshop.api.RemainderProductEndpoint;
-import com.am.basketballshop.api.dto.remainderProduct.RequestRemainderProductDto;
-import com.am.basketballshop.api.dto.remainderProduct.ResponseRemainderProductDto;
+import com.am.basketballshop.api.dto.remainderProduct.RemainderProductDto;
 import com.am.basketballshop.services.RemainderProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,17 +17,23 @@ public class RemainderProductController implements RemainderProductEndpoint {
     private final RemainderProductService remainderProductService;
 
     @Override
-    public List<ResponseRemainderProductDto> getRemainderProduct(String productModelId) {
+    public List<RemainderProductDto> getRemainderProduct(String productModelId) {
         return remainderProductService.getRemainderProduct(productModelId);
     }
 
     @Override
-    public ResponseRemainderProductDto createRemainderProduct(RequestRemainderProductDto remainderProductDto) {
+    public RemainderProductDto getRemainder(String remainderId) {
+        return remainderProductService.getRemainder(remainderId);
+    }
+
+
+    @Override
+    public RemainderProductDto createRemainderProduct(RemainderProductDto remainderProductDto) {
         return remainderProductService.createRemainderProduct(remainderProductDto);
     }
 
     @Override
-    public ResponseRemainderProductDto updateRemainderProduct(String remainderProductId, RequestRemainderProductDto remainderProductDto) {
+    public RemainderProductDto updateRemainderProduct(String remainderProductId, RemainderProductDto remainderProductDto) {
         return remainderProductService.updateRemainderProduct(remainderProductId, remainderProductDto);
     }
 
